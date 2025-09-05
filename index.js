@@ -1,5 +1,19 @@
 const axios = require("axios");
 
+function findGreater(arr) {
+  let bestIndex = 0;
+  let bestValue = arr[0];
+  for(let i=1; i < arr.length; i++)  {
+    if(arr[i] > bestValue){
+      bestValue = arr[i];
+      bestIndex = i;
+    }
+  }
+
+  return bestIndex;
+}
+
+
 setInterval(async () => {
   const {data} = await axios.get("https://api.binance.com/api/v3/depth?symbol=BTCUSDT&limit=5000");
   
@@ -29,5 +43,12 @@ setInterval(async () => {
     difference = (asksSum * 100 / asksSum) - 100;
   }
   console.log(difference.toFixed(2) + "%");
+
+  const bestByIndex = findGreater(bidsNotional);
+  console.log("Maior zona de zona de compra: " + bidsFloat[bestByIndex]);
+
+   const bestSellIndex = findGreater(asksNotional);
+  console.log("Maior zona de zona de venda: " + asksFloat[bestSellIndex]);
   
-},300)
+  
+},300);
